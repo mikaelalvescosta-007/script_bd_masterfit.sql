@@ -1,10 +1,10 @@
 CREATE TABLE usuario(
  id_usuario SERIAL PRIMARY KEY,
- nome varchar(100)not.null,
- email varchar(100)not.null,
- senha_hash varchar(255)not.null,
- data_nascimento (date)not.null,
- tipo_perfil varchar(255)not.null,
+ nome varchar(100)not null,
+ email varchar(100)not null,
+ senha_hash varchar(255)not null,
+ data_nascimento date not null,
+ tipo_perfil varchar(255)not null,
  fcm_toke varchar(255),
  data_cadastro timestamp
  );
@@ -13,14 +13,14 @@ CREATE TABLE usuario(
 SELECT * FROM usuario;
 
 
-INSERT INTO usuario (nome,email,cpf) VALUES ('mikael', 'mikael.alves.costa@escola.pr.gov.br', '1234567890');
+INSERT INTO usuario (nome, email, senha_hash, data_nascimento, tipo_perfil) VALUES ('mikael', 'mikael.alves.costa@escola.pr.gov.br', 'hash_senha_123', '2000-01-01', 'cliente');
 
 CREATE TABLE pedido(
- id_usuario SERIAL PRIMARY KEY,
- id_clientre int not null,
+ id_pedido SERIAL PRIMARY KEY,
+ id_cliente int not null,
  id_endereco_entrega int not null,
  id_cupom int,
- status_pedido status_pedido_enum varchar(255) not null,
+ status_pedido varchar(255) not null,
  valor_subtotal decimal(10,2) not null,
  valor_desconto decimal(10,2),
  valor_total decimal(10,2),
@@ -31,21 +31,23 @@ CREATE TABLE pedido(
 SELECT * FROM pedido;
 
 
-INSERT INTO pedido (endereco,cliente) VALUES ('mikael', 'mikael.alves.costa@escola.pr.gov.br');
+INSERT INTO pedido (id_cliente, id_endereco_entrega, status_pedido, valor_subtotal, valor_total) VALUES (1, 1, 'Pendente', 100.00, 100.00);
 
 CREATE TABLE item_pedido(
   id_item_pedido SERIAL PRIMARY KEY,
   id_pedido int not null,
   id_suplemento int not null,
   quantidade int not null,
-  preco_unitario decimal (10,2) not null
+  preco_unitario decimal(10,2) not null,
+  CONSTRAINT fk_item_pedido FOREIGN KEY (id_pedido) REFERENCES pedido(id_pedido),
+  CONSTRAINT fk_item_suplemento FOREIGN KEY (id_suplemento) REFERENCES suplemento(id_suplemento)
   );
 
 SELECT * FROM item_pedido;
 
 CREATE TABLE suplemento_favorito(
 
-  id_favorito SERIL PRIMARY KEY,
+  id_favorito SERIAL PRIMARY KEY,
   id_usuario int not null,
   id_suplemento int not null,
   data_adicao timestamp
