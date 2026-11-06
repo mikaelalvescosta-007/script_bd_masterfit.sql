@@ -124,8 +124,8 @@ create table public.notificacao_push (
 
 CREATE TABLE alimentos(
  id_alimentos SERIAL PRIMARY KEY,
- id_nome varchar(120),
- id_porcao_padrao_gramas decimal(8,2),
- id_calorias_base decimal(8,2),
- id_proteinas_g decimal (6,2)
+ nome varchar(120),
+ porcao_padrao_gramas decimal(8,2),
+ calorias_base decimal(8,2),
+ proteinas_g decimal (6,2)
 );
